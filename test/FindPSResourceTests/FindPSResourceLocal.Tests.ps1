@@ -15,6 +15,8 @@ Describe 'Test Find-PSResource for local repositories' -tags 'CI' {
         $testModuleName = "test_local_mod"
         $testModuleName2 = "test_local_mod2"
         $testModuleName3 = "Test_Local_Mod3"
+        $testModuleName4 = "Test.Local.Mod4"
+        $testModuleName5 = "TestXLocalXMod4"
         $similarTestModuleName = "test_local_mod.similar"
         $commandName = "cmd1"
         $dscResourceName = "dsc1"
@@ -37,6 +39,10 @@ Describe 'Test Find-PSResource for local repositories' -tags 'CI' {
         New-TestModule -moduleName $testModuleName2 -repoName $localRepo -packageVersion "5.2.5" -prereleaseLabel $prereleaseLabel -tags $tagsEscaped
 
         New-TestModule -moduleName $testModuleName3 -repoName $localRepo -packageVersion "1.0.0" -prereleaseLabel "" -tags @()
+
+        New-TestModule -moduleName $testModuleName4 -repoName $localRepo -packageVersion "1.0.0" -prereleaseLabel "" -tags @()
+
+        New-TestModule -moduleName $testModuleName5 -repoName $localRepo -packageVersion "1.0.0" -prereleaseLabel "" -tags @()
 
         New-TestModule -moduleName $similarTestModuleName -repoName $localRepo -packageVersion "4.0.0" -prereleaseLabel "" -tags $tagsEscaped
         New-TestModule -moduleName $similarTestModuleName -repoName $localRepo -packageVersion "5.0.0" -prereleaseLabel "" -tags $tagsEscaped
@@ -65,6 +71,18 @@ Describe 'Test Find-PSResource for local repositories' -tags 'CI' {
         $res = Find-PSResource -Name "test_local_mod3" -Version "1.0.0" -Repository $localRepo
         $res.Name | Should -Be $testModuleName3
         $res.Version | Should -Be "1.0.0"
+    }
+
+    It "find resource given specific Name with dots '.' in the name" {
+        # FindVersion()
+        $res = Find-PSResource -Name "Test.Local.Mod4" -Repository $localRepo
+        $res.Name | Should -Be $testModuleName4
+    }
+
+    It "don't find resource given specific Name with dots '.' in the name (should not find the module with other char)" {
+        # FindVersion()
+        $res = Find-PSResource -Name "Test.Local.Mod5" -Repository $localRepo
+        $res.Name | Should -Be $testModuleName5
     }
 
     It "find resource given specific Name, Version null (module) from a UNC-based local repository" {
