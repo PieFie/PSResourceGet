@@ -260,7 +260,7 @@ namespace Microsoft.PowerShell.PSResourceGet.Cmdlets
             string actualPkgName = packageName;
 
             // this regex pattern matches packageName followed by a version (4 digit or 3 with prerelease word)
-            string regexPattern = $"{packageName}" + @"(\.\d+){1,3}(?:[a-zA-Z0-9-.]+|.\d)?\.nupkg";
+            string regexPattern = $"{Regex.Escape(packageName)}" + @"(\.\d+){1,3}(?:[a-zA-Z0-9-.]+|.\d)?\.nupkg";
             _cmdletPassedIn.WriteDebug($"package file name pattern to be searched for is: {regexPattern}");
 
             foreach (string path in Directory.GetFiles(Repository.Uri.LocalPath))
@@ -377,7 +377,7 @@ namespace Microsoft.PowerShell.PSResourceGet.Cmdlets
             }
 
             // this regex pattern matches packageName followed by the requested version
-            string regexPattern = $"{packageName}.{requiredVersion.ToNormalizedString()}" + @".nupkg";
+            string regexPattern = $"{Regex.Escape(packageName)}.{requiredVersion.ToNormalizedString()}" + @".nupkg";
             _cmdletPassedIn.WriteDebug($"pattern is: {regexPattern}");
             string pkgPath = String.Empty;
             string actualPkgName = String.Empty;
@@ -385,7 +385,7 @@ namespace Microsoft.PowerShell.PSResourceGet.Cmdlets
             foreach (string path in Directory.GetFiles(Repository.Uri.LocalPath))
             {
                 string packageFullName = Path.GetFileName(path);
-                bool isMatch = Regex.IsMatch(packageFullName, regexPattern, RegexOptions.IgnoreCase);
+                bool isMatch = Regex.IsMatch(packageFullName, , RegexOptions.IgnoreCase);
                 if (!isMatch)
                 {
                     continue;
