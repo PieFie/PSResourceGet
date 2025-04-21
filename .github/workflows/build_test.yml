@@ -22,6 +22,11 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: |
+        if (-not (Test-Path $(repoRoot)/.config/tsaoptions.json)) {
+              Get-ChildItem $(Build.SourcesDirectory) -recurse -ErrorAction SilentlyContinue
+              throw "tsaoptions.json does not exist under $(repoRoot)/.config"
+        }
       - run: .\bootstrap.ps1
       - run: ./build.ps1 -Build -Clean -BuildConfiguration Release -BuildFramework 'net472'
       #- name: Upload a Build Artifact
