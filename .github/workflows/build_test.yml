@@ -32,11 +32,11 @@ jobs:
       - name: Display dotnet version
         run: dotnet --version
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      - pwsh: |
-        if (-not (Test-Path $(repoRoot)/.config/tsaoptions.json)) {
-              Get-ChildItem $(Build.SourcesDirectory) -recurse -ErrorAction SilentlyContinue
-              throw "tsaoptions.json does not exist under $(repoRoot)/.config"
-        }
+      #- pwsh: |
+      #  if (-not (Test-Path $(repoRoot)/.config/tsaoptions.json)) {
+      #        Get-ChildItem $(Build.SourcesDirectory) -recurse -ErrorAction SilentlyContinue
+      #        throw "tsaoptions.json does not exist under $(repoRoot)/.config"
+      #  }
       #- run: .\bootstrap.ps1
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
