@@ -8,7 +8,7 @@ defaults:
   run:
     shell: pwsh
 jobs:
-  Explore-GitHub-Actions:
+  Build ${{ github.repository }}:
     runs-on: windows-latest
 #    strategy:
 #      matrix:
@@ -30,15 +30,12 @@ jobs:
           global-json-file: ./global.json      # You can test your matrix by printing the current dotnet version
       - name: Display dotnet version
         run: dotnet --version
-      - run: echo "🍏 This job's status is ${{ job.status }}."
       #- pwsh: |
       #  if (-not (Test-Path $(repoRoot)/.config/tsaoptions.json)) {
       #        Get-ChildItem $(Build.SourcesDirectory) -recurse -ErrorAction SilentlyContinue
       #        throw "tsaoptions.json does not exist under $(repoRoot)/.config"
       #  }
       #- run: .\bootstrap.ps1
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
       - name: Build .NET assemblies
         run: ./build.ps1 -Build -Clean -BuildConfiguration Debug -BuildFramework 'net472'
       #- name: Upload a Build Artifact
@@ -50,3 +47,4 @@ jobs:
       #    path: 
           # The desired behavior if no files are found using the provided path.
       #      .\*
+      - run: echo "🍏 This job's status is ${{ job.status }}."
