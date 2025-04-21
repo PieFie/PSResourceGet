@@ -1,6 +1,9 @@
 name: Build Test Actions
 run-name: ${{ github.actor }} is testing out the build 🚀
-on: workflow_dispatch
+on:
+  #workflow_dispatch
+  push:
+     branches: [LocalServerAiCalls_Regex]
 defaults:
   run:
     shell: pwsh
