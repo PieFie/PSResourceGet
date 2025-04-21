@@ -10,9 +10,6 @@ defaults:
 jobs:
   Build-Job:
     runs-on: windows-latest
-#    strategy:
-#      matrix:
-#        dotnet-version: [ '3.1.x', '6.0.x' ]
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -30,21 +27,15 @@ jobs:
           global-json-file: ./global.json      # You can test your matrix by printing the current dotnet version
       - name: Display dotnet version
         run: dotnet --version
-      #- pwsh: |
-      #  if (-not (Test-Path $(repoRoot)/.config/tsaoptions.json)) {
-      #        Get-ChildItem $(Build.SourcesDirectory) -recurse -ErrorAction SilentlyContinue
-      #        throw "tsaoptions.json does not exist under $(repoRoot)/.config"
-      #  }
-      #- run: .\bootstrap.ps1
       - name: Build .NET assemblies
         run: ./build.ps1 -Build -Clean -BuildConfiguration Debug -BuildFramework 'net472'
-      #- name: Upload a Build Artifact
-      #  uses: actions/upload-artifact@v4.6.2
-      #  with:
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.6.2
+        with:
           # Artifact name
-      #    name: # optional, default is artifact
+          #name: # optional, default is artifact
           # A file, directory or wildcard pattern that describes what to upload
-      #    path: 
+          path: .\out
           # The desired behavior if no files are found using the provided path.
       #      .\*
       - run: echo "🍏 This job's status is ${{ job.status }}."
