@@ -39,3 +39,5 @@ jobs:
           # The desired behavior if no files are found using the provided path.
       #      .\*
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Run tests (pester)
+        run: Invoke-Pester
