@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is testing out the build 🚀
 on:
   #workflow_dispatch
   push:
-     branches: [LocalServerApiCalls_RegexEsc]
+     branches: [${{ github.ref }}]
 defaults:
   run:
     shell: pwsh
