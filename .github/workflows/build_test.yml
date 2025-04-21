@@ -23,6 +23,7 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - run: .\bootstrap.ps1
+      - run: .\build.ps1
       #- name: Upload a Build Artifact
       #  uses: actions/upload-artifact@v4.6.2
       #  with:
