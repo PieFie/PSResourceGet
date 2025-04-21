@@ -22,7 +22,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      - run: |
+      - pwsh: |
         if (-not (Test-Path $(repoRoot)/.config/tsaoptions.json)) {
               Get-ChildItem $(Build.SourcesDirectory) -recurse -ErrorAction SilentlyContinue
               throw "tsaoptions.json does not exist under $(repoRoot)/.config"
