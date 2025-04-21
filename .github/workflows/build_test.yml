@@ -8,7 +8,7 @@ defaults:
   run:
     shell: pwsh
 jobs:
-  Build Job:
+  Build-Job:
     runs-on: windows-latest
 #    strategy:
 #      matrix:
